@@ -1,6 +1,6 @@
 # silicon.lua
 
-**silicon** is a lua plugin for neovim to generate beautiful images of code snippet using [silicon](https://github.com/aloxaf/silicon) 
+**silicon** is a lua plugin for neovim to generate beautiful images of code snippet using [silicon](https://github.com/aloxaf/silicon)
 
 <video src = "https://user-images.githubusercontent.com/79555780/198016165-7a47ac6c-e329-4025-8d66-f9b34bd52658.mp4"></video>
 
@@ -74,7 +74,7 @@ silicon comes with the following defaults:
 
 ```lua
 -- Generate image of lines in a visual selection
-vim.keymap.set('v', '<Leader>s',  function() silicon.visualise_api({}) end )
+vim.keymap.set('v', '<Leader>s',  function() silicon.visualise_api() end )
 -- Generate image of a whole buffer, with lines in a visual selection highlighted
 vim.keymap.set('v', '<Leader>bs', function() silicon.visualise_api({to_clip = true, show_buf = true}) end )
 -- Generate visible portion of a buffer
@@ -91,31 +91,31 @@ A workaround has been implemented, and a shorthand that forces it is available a
 
 - Generate image of lines in a visual selection
 
-    ```lua
-    lua require('silicon').visualise_cmdline({})
-    ```
+  ```lua
+  lua require('silicon').visualise_cmdline()
+  ```
 
 - Generate image of a whole buffer, with lines in a visual selection highlighted
 
-    ```lua
-    lua require('silicon').visualise_cmdline({to_clip = true, show_buf = true})
-    ```
+  ```lua
+  lua require('silicon').visualise_cmdline({to_clip = true, show_buf = true})
+  ```
 
 - Generate visible portion of a buffer
 
-    ```lua
-    lua require('silicon').visualise_cmdline({to_clip = true, visible = true})
-    ```
+  ```lua
+  lua require('silicon').visualise_cmdline({to_clip = true, visible = true})
+  ```
 
 ## Notes
 
 - The default path of image is the current working directory of the editor, but you can change it by
 
-    ```lua
-    require("silicon").setup({
-            output = "/home/astro/Pictures/SILICON_$year-$month-$date-$time.png"),
-    })
-    ```
+  ```lua
+  require("silicon").setup({
+          output = "/home/astro/Pictures/SILICON_$year-$month-$date-$time.png"),
+  })
+  ```
 
 ## Colorscheme reloading
 

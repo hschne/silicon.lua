@@ -33,8 +33,9 @@ end
 -- visible boolean whether to render visible buffer
 -- cmdline boolean whether to work around cmdline issues
 ---]]
----@param opts table containing the options
+---@param opts? table containing the options
 init.visualise_api = function(opts)
+	opts = opts or {}
 	local range
 	if opts.visible then
 		range = { vim.fn.getpos("w0")[2], vim.fn.getpos("w$")[2] }
@@ -53,8 +54,9 @@ end
 -- to_clip boolean whether to show clipboard
 -- visible boolean whether to render visible buffer
 ---]]
----@param opts table containing the options
+---@param opts? table containing the options
 init.visualise_cmdline = function(opts)
+	opts = opts or {}
 	opts = vim.tbl_extend("keep", { cmdline = true }, opts)
 	init.visualise_api(opts)
 end
