@@ -1,5 +1,5 @@
 local opts = require("silicon.config").opts
-local utils = require('silicon.utils')
+local utils = require("silicon.utils")
 local Job = require("plenary.job")
 local fmt = string.format
 
@@ -34,34 +34,35 @@ request.exec = function(range, show_buffer, copy_to_board)
 
 	local textCode = table.concat(lines, "\n")
 
-  local default_themes = {
-"1337",
-"Coldark-Cold",
-"Coldark-Dark",
-"DarkNeon",
-"Dracula",
-"GitHub",
-"Monokai Extended",
-"Monokai Extended Bright",
-"Monokai Extended Light",
-"Monokai Extended Origin",
-"Nord",
-"OneHalfDark",
-"OneHalfLight",
-"Solarized (dark)",
-"Solarized (light)",
-"Sublime Snazzy",
-"TwoDark",
-"Visual Studio Dark+",
-"ansi",
-"base16",
-"base16-256"}
+	local default_themes = {
+		"1337",
+		"Coldark-Cold",
+		"Coldark-Dark",
+		"DarkNeon",
+		"Dracula",
+		"GitHub",
+		"Monokai Extended",
+		"Monokai Extended Bright",
+		"Monokai Extended Light",
+		"Monokai Extended Origin",
+		"Nord",
+		"OneHalfDark",
+		"OneHalfLight",
+		"Solarized (dark)",
+		"Solarized (light)",
+		"Sublime Snazzy",
+		"TwoDark",
+		"Visual Studio Dark+",
+		"ansi",
+		"base16",
+		"base16-256",
+	}
 
-	if string.lower(opts.theme) == "auto" or not(vim.tbl_contains(default_themes, opts.theme)) then
-        if string.match(utils._os_capture("silicon --version"), "%d+%.%d+%.%d+") < "0.5.1" then
-            vim.notify("silicon v0.5.1 or higher is required for automagically creating theme", vim.log.levels.ERROR)
-            return
-        end
+	if string.lower(opts.theme) == "auto" or not (vim.tbl_contains(default_themes, opts.theme)) then
+		if string.match(utils._os_capture("silicon --version"), "%d+%.%d+%.%d+") < "0.5.1" then
+			vim.notify("silicon v0.5.1 or higher is required for automagically creating theme", vim.log.levels.ERROR)
+			return
+		end
 		opts.theme = vim.g.colors_name .. "_" .. vim.o.background
 		if utils._exists(utils.themes_path) ~= true then
 			os.execute(fmt("mkdir -p %s %s", utils.themes_path, utils.syntaxes_path))
@@ -70,7 +71,7 @@ request.exec = function(range, show_buffer, copy_to_board)
 			goto skip_build
 		end
 		utils.build_tmTheme()
-		utils.reload_silicon_cache({async = false})
+		utils.reload_silicon_cache({ async = false })
 	end
 
 	::skip_build::

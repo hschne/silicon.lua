@@ -73,7 +73,8 @@ utils.build_tmTheme = function()
 end
 
 utils._replace_placeholders = function(str)
-	return str:gsub("${time}", fmt("%s:%s", os.date("%H"), os.date("%M")))
+	return str
+		:gsub("${time}", fmt("%s:%s", os.date("%H"), os.date("%M")))
 		:gsub("${year}", os.date("%Y"))
 		:gsub("${month}", os.date("%m"))
 		:gsub("${date}", os.date("%d"))
