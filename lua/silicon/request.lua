@@ -1,11 +1,15 @@
 local opts = require("silicon.config").opts
-local utils = require("silicon.utils")
 local Job = require("plenary.job")
+local utils = require("silicon.utils")
 local fmt = string.format
 
 local request = {}
 
-request.exec = function(range, show_buffer, copy_to_board)
+---@param range {} range of lines
+---@param show_buffer boolean whether to show buffer
+---@param copy_to_board boolean whether to show clipboard
+---@param highlight boolean whether to show hightlight
+request.exec = function(range, show_buffer, copy_to_board, highlight)
 	table.sort(range)
 	local starting, ending = unpack(range)
 	starting = starting - 1
@@ -23,8 +27,7 @@ request.exec = function(range, show_buffer, copy_to_board)
 		for idx = 1, #lines do
 			lines[idx] = lines[idx]:gsub("\t", string.rep(" ", vim.bo.tabstop))
 			current_whitespace = string.len(string.match(lines[idx], "^[\r\n\t\f\v ]*") or "")
-			whitespace = current_whitespace < (whitespace or current_whitespace + 1) and current_whitespace
-				or whitespace
+			whitespace = current_whitespace < (whitespace or current_whitespace + 1) and current_whitespace or whitespace
 		end
 		-- Now remove whitespace
 		for idx = 1, #lines do
@@ -118,7 +121,7 @@ request.exec = function(range, show_buffer, copy_to_board)
 			table.insert(args, "--background")
 			table.insert(args, opts.bgColor)
 		end
-		if show_buffer then
+		if highlight then
 			table.insert(args, "--highlight-lines")
 			table.insert(args, fmt("%s-%s", starting + 1, ending))
 		end
@@ -154,11 +157,7 @@ request.exec = function(range, show_buffer, copy_to_board)
 					end, 0)
 				else
 					vim.defer_fn(function()
-						vim.notify(
-							"Some error occured while executing silicon",
-							vim.log.levels.ERROR,
-							{ plugin = "silicon.lua" }
-						)
+						vim.notify("Some error occured while executing silicon", vim.log.levels.ERROR, { plugin = "silicon.lua" })
 					end, 0)
 				end
 			end,
